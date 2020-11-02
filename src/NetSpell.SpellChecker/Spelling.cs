@@ -4,20 +4,17 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using NetSpell.SpellChecker.Dictionary;
-using NetSpell.SpellChecker.Forms;
 
 namespace NetSpell.SpellChecker
 {
-	/// <summary>
-	///		The Spelling class encapsulates the functions necessary to check
-	///		the spelling of inputted text.
-	/// </summary>
-	[ToolboxBitmap(typeof(Spelling), "Spelling.bmp")]
+    /// <summary>
+    ///		The Spelling class encapsulates the functions necessary to check
+    ///		the spelling of inputted text.
+    /// </summary>
 	public class Spelling : Component
 	{
 
@@ -220,10 +217,6 @@ namespace NetSpell.SpellChecker
 			{
 				if(components != null)
 					components.Dispose();
-				
-				// free form resources
-				if(_suggestionForm != null)
-					_suggestionForm.Dispose();
 			}
 			base.Dispose( disposing );
 		}
@@ -287,9 +280,6 @@ namespace NetSpell.SpellChecker
 
 			if(!_dictionary.Initialized)
 				_dictionary.Initialize();
-
-			if(_suggestionForm == null && _showDialog)
-				_suggestionForm = new SuggestionForm(this);
 		}
 		/// <summary>
 		///     Calculates the position of html tags in the Text property
@@ -1149,9 +1139,7 @@ namespace NetSpell.SpellChecker
 		private int _maxSuggestions = 25;
 		private Hashtable _replaceList = new Hashtable();
 		private string _replacementWord = "";
-		private bool _showDialog = true;
-		private SuggestionForm _suggestionForm;
-		private SuggestionEnum _suggestionMode = SuggestionEnum.PhoneticNearMiss;
+        private SuggestionEnum _suggestionMode = SuggestionEnum.PhoneticNearMiss;
 		private ArrayList _suggestions = new ArrayList();
 		private StringBuilder _text = new StringBuilder();
 		private int _wordIndex = 0;
@@ -1183,19 +1171,6 @@ namespace NetSpell.SpellChecker
 			NearMiss
 		}
 
-
-		/// <summary>
-		///     Display the 'Spell Check Complete' alert.
-		/// </summary>
-		[Browsable(true)]
-		[DefaultValue(true)]
-		[Category("Options")]
-		[Description("Display the 'Spell Check Complete' alert.")]
-		public bool AlertComplete
-		{
-			get { return _alertComplete; }
-			set { _alertComplete = value; }
-		}
 
 		/// <summary>
 		///     The current word being spell checked from the text property
@@ -1297,13 +1272,13 @@ namespace NetSpell.SpellChecker
 			set {_maxSuggestions = value;}
 		}
 
-		/// <summary>
-		///     List of words and replacement values to automatically replace
-		/// </summary>
-		/// <remarks>
-		///		When <see cref="ReplaceAllWord"/> is clicked, the <see cref="CurrentWord"/> is added to this list
-		/// </remarks>
-		[Browsable(false)]
+        /// <summary>
+        ///     List of words and replacement values to automatically replace
+        /// </summary>
+        /// <remarks>
+        ///		When <see cref="ReplaceAllWord"/> is clicked, the <see cref="CurrentWord"/> is added to this list
+        /// </remarks>
+        [Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Hashtable ReplaceList
 		{
@@ -1324,43 +1299,6 @@ namespace NetSpell.SpellChecker
 		}
 
 		/// <summary>
-		///     Determines if the spell checker should use its internal suggestions
-		///     and options dialogs.
-		/// </summary>
-		[DefaultValue(true)]
-		[Category("Options")]
-		[Description("Determines if the spell checker should use its internal dialogs")]
-		public bool ShowDialog
-		{
-			get {return _showDialog;}
-			set 
-			{
-				_showDialog = value;
-				if (_showDialog && _suggestionForm != null) 
-					_suggestionForm.AttachEvents();
-				else if(_suggestionForm != null)
-					_suggestionForm.DetachEvents();
-			}
-		}
-
-
-		/// <summary>
-		///     The internal spelling suggestions dialog form
-		/// </summary>
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public SuggestionForm SuggestionForm
-		{
-			get 
-			{
-				if(_suggestionForm == null)
-					_suggestionForm = new SuggestionForm(this);
-
-				return _suggestionForm;
-			}
-		}
-
-		/// <summary>
 		///     The suggestion strategy to use when generating suggestions
 		/// </summary>
 		[DefaultValue(SuggestionEnum.PhoneticNearMiss)]
@@ -1375,8 +1313,6 @@ namespace NetSpell.SpellChecker
 		/// <summary>
 		///     An array of word suggestions for the correct spelling of the misspelled word
 		/// </summary>
-		/// <seealso cref="Suggest"/>
-		/// <seealso cref="SpellCheck"/>
 		/// <seealso cref="MaxSuggestions"/>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

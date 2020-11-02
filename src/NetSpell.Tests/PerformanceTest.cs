@@ -2,24 +2,17 @@
 // All rights reserved.
 
 using System;
-using System.Collections;
 using System.IO;
+using System.Reflection;
 using System.Text;
-using System.Diagnostics;
-
-using NUnit.Framework;
 using NetSpell.SpellChecker;
-using NetSpell.SpellChecker.Dictionary;
-using NetSpell.SpellChecker.Dictionary.Phonetic;
-using NetSpell.SpellChecker.Dictionary.Affix;
+using Xunit;
 
 namespace NetSpell.Tests
 {
-	/// <summary>
-	/// Summary description for PerformanceTest.
-	/// </summary>
-	[TestFixture]
-	[Ignore("Too Long")]
+    /// <summary>
+    /// Summary description for PerformanceTest.
+    /// </summary>
 	public class PerformanceTest
 	{
 		Spelling _SpellChecker = new Spelling();
@@ -27,26 +20,18 @@ namespace NetSpell.Tests
 
 		public PerformanceTest()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
-
-		[SetUp]
-		public void SetUp()
-		{
 			_SpellChecker.Dictionary.DictionaryFolder = @"..\..\..\..\dic";
 			_SpellChecker.Dictionary.Initialize();
 			
-			_SpellChecker.ShowDialog = false;
 			_SpellChecker.MaxSuggestions = 0;
 		}
 
-		[Test]
+		[Fact]
 		public void SuggestionRank()
 		{
-			string invalidFile = @"..\src\NetSpell.Tests\Data\SuggestionTest.txt";
-			
+			var invalidFile = Path.Combine(
+				Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", "SuggestionTest.txt");
+
 			// open file
 			FileStream fs = new FileStream(invalidFile, FileMode.Open, FileAccess.Read, FileShare.Read);
 			StreamReader sr = new StreamReader(fs, Encoding.UTF7);

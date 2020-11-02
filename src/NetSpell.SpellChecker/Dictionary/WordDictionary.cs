@@ -1,24 +1,20 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Design;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Windows.Forms.Design;
 using NetSpell.SpellChecker.Dictionary.Affix;
 using NetSpell.SpellChecker.Dictionary.Phonetic;
 
 namespace NetSpell.SpellChecker.Dictionary
 {
 
-	/// <summary>
-	/// The WordDictionary class contains all the logic for managing the word list.
-	/// </summary>
-	[ToolboxBitmap(typeof(WordDictionary), "Dictionary.bmp")]
+    /// <summary>
+    /// The WordDictionary class contains all the logic for managing the word list.
+    /// </summary>
 	public class WordDictionary : Component
 	{
 		private Hashtable _baseWords = new Hashtable();
@@ -655,7 +651,6 @@ namespace NetSpell.SpellChecker.Dictionary
 		[DefaultValue("")]
 		[Category("Dictionary")]
 		[Description("The folder containing dictionaries")]
-		[Editor(typeof(FolderNameEditor), typeof(UITypeEditor))]
 		[NotifyParentProperty(true)]
 		public string DictionaryFolder
 		{
